@@ -46,9 +46,9 @@ function Navbar() {
         </div>
         <a className="btn btn-ghost normal-case text-3xl">semtrack</a>
       </div>
-      <div className="navbar-end">
+      {/* <div className="navbar-end">
         <a className="btn">sync</a>
-      </div>
+      </div> */}
     </div>
   );
 }

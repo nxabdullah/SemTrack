@@ -27,6 +27,36 @@ function Courses() {
               <button className="btn btn-ghost btn-sm">view grades</button>
             </th>
           </tr>
+          {/* row 2 */}
+          <tr>
+            <td>
+              <div className="flex items-center space-x-3">
+                {" "}
+                <div>
+                  <div className="font-bold text-lg">STA246</div>
+                </div>
+              </div>
+            </td>
+            <td>85%</td>
+            <th>
+              <button className="btn btn-ghost btn-sm">view grades</button>
+            </th>
+          </tr>
+          {/* row 2 */}
+          <tr>
+            <td>
+              <div className="flex items-center space-x-3">
+                {" "}
+                <div>
+                  <div className="font-bold text-lg">MAT224</div>
+                </div>
+              </div>
+            </td>
+            <td>57%</td>
+            <th>
+              <button className="btn btn-ghost btn-sm">view grades</button>
+            </th>
+          </tr>
         </tbody>
       </table>
     </div>
