@@ -1,9 +1,30 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addCourse } from "../store/";
+
 // button is coupled rn @todo - use it as a prop
 function AddCourseModal() {
+  const [inputCourseName, setInputCourseName] = useState("");
+  const dispatch = useDispatch();
+
+  const handleAddCourse = () => {
+    dispatch(
+      addCourse({
+        name: inputCourseName,
+      })
+    );
+    setInputCourseName("");
+    closeModal();
+  };
+
+  const closeModal = () => {
+    window.addCourseModal.close();
+  };
+
   return (
     <>
       <dialog id="addCourseModal" className="modal">
-        <form method="dialog" className="modal-box">
+        <form method="dialog" className="modal-box" onSubmit={handleAddCourse}>
           <h3 className="font-bold text-lg">ADD COURSE</h3>
           <div className="form-control w-full max-w-xs">
             <label className="label mt-2">
@@ -13,19 +34,19 @@ function AddCourseModal() {
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full max-w-xs input-primary"
+              value={inputCourseName}
+              onSubmit={handleAddCourse}
+              onChange={(event) => setInputCourseName(event.target.value)}
             />
           </div>
           <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn">close</button>
+            <button className="btn" onClick={closeModal}>
+              close
+            </button>
             <button className="btn btn-primary">add</button>
           </div>
         </form>
       </dialog>
-
-      {/* <button className="btn" onClick={() => window.addCourseModal.showModal()}>
-        open modal
-      </button> */}
       <button
         className="btn btn-primary float-right"
         onClick={() => window.addCourseModal.showModal()}

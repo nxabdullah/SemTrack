@@ -1,7 +1,35 @@
+import { useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
+
+const generateRandomMark = () => {
+  return Math.floor(Math.random() * 100);
+};
 
 // should i accept title and button instead?
 function Courses() {
+  const courses = useSelector((state) => state.courses.courses);
+
+  const renderedCourses = courses.map((course) => {
+    return (
+      <tr key={course.id}>
+        <td>
+          <div className="flex items-center space-x-3">
+            {" "}
+            <div>
+              <div className="font-bold text-lg">{course.name}</div>
+            </div>
+          </div>
+        </td>
+        <td>{generateRandomMark()}%</td>
+        <th>
+          <button className="btn btn-ghost btn-sm">view grades</button>
+        </th>
+      </tr>
+    );
+  });
+
+  console.log(courses);
+
   return (
     <>
       {/* <AddCourseModal
@@ -25,53 +53,7 @@ function Courses() {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <td>
-                <div className="flex items-center space-x-3">
-                  {" "}
-                  <div>
-                    <div className="font-bold text-lg">CSC301</div>
-                  </div>
-                </div>
-              </td>
-              <td>75%</td>
-              <th>
-                <button className="btn btn-ghost btn-sm">view grades</button>
-              </th>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <td>
-                <div className="flex items-center space-x-3">
-                  {" "}
-                  <div>
-                    <div className="font-bold text-lg">STA246</div>
-                  </div>
-                </div>
-              </td>
-              <td>85%</td>
-              <th>
-                <button className="btn btn-ghost btn-sm">view grades</button>
-              </th>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <td>
-                <div className="flex items-center space-x-3">
-                  {" "}
-                  <div>
-                    <div className="font-bold text-lg">MAT224</div>
-                  </div>
-                </div>
-              </td>
-              <td>57%</td>
-              <th>
-                <button className="btn btn-ghost btn-sm">view grades</button>
-              </th>
-            </tr>
-          </tbody>
+          <tbody>{renderedCourses}</tbody>
         </table>
       </div>
     </>
