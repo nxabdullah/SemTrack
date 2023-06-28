@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
+import { Link } from "react-router-dom";
 
 const generateRandomMark = () => {
   return Math.floor(Math.random() * 100);
@@ -22,7 +23,9 @@ function Courses() {
         </td>
         <td>{generateRandomMark()}%</td>
         <th>
-          <button className="btn btn-ghost btn-sm">view grades</button>
+          <Link to={`/courses/${course.id}`}>
+            <button className="btn btn-ghost btn-sm">view grades</button>
+          </Link>
         </th>
       </tr>
     );

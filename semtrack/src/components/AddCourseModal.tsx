@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addCourse } from "../store/";
 
 // button is coupled rn @todo - use it as a prop
+// todo - add formik
 function AddCourseModal() {
   const [inputCourseName, setInputCourseName] = useState("");
   const dispatch = useDispatch();
@@ -19,6 +20,12 @@ function AddCourseModal() {
 
   const closeModal = () => {
     window.addCourseModal.close();
+  };
+
+  const handleClose = (event) => {
+    event.preventDefault();
+    setInputCourseName("");
+    closeModal();
   };
 
   return (
@@ -40,7 +47,7 @@ function AddCourseModal() {
             />
           </div>
           <div className="modal-action">
-            <button className="btn" onClick={closeModal}>
+            <button className="btn" onClick={(e) => handleClose(e)}>
               close
             </button>
             <button className="btn btn-primary">add</button>
