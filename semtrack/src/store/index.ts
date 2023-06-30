@@ -1,6 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { courseReducer, addCourse, removeCourse } from "./slices/coursesSlice";
-import { gradesReducer, addGrade } from "./slices/gradesSlice";
+import { courseReducer, addCourse, CourseState } from "./slices/coursesSlice";
+import {
+  gradesReducer,
+  addGrade,
+  updateGrade,
+  GradeState,
+} from "./slices/gradesSlice";
+
+export interface RootState {
+  courses: CourseState;
+  grades: GradeState;
+}
 
 const store = configureStore({
   reducer: {
@@ -9,4 +19,4 @@ const store = configureStore({
   },
 });
 
-export { store, addCourse, removeCourse, addGrade };
+export { store, addCourse, addGrade, updateGrade };

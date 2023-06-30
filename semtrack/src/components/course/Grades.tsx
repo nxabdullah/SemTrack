@@ -1,19 +1,31 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateGrade, RootState } from "../../store";
+import { Grade, GradeState } from "../../store/slices/gradesSlice";
 
 function Grades({ courseId }) {
-  const grades = useSelector((state) => {
-    console.log(state);
-    return state.grades.filter((grade) => {
-      return grade.courseId === courseId;
-    });
+  const dispatch = useDispatch();
+
+  const grades = useSelector((state: RootState) => {
+    return state.grades.data.filter(
+      (grade: Grade) => grade.courseId === courseId
+    );
   });
+
+  // const handleNameChange = (event, courseId) => {
+  //   dispatch(updateGrade({ id: courseId, name: event.target.value }));
+  // };
 
   const renderedGrades = () => {
     return grades.map((grade) => {
       return (
         <tr key={grade.id}>
           <th>
-            <input type="text" value={grade.name} className="input disabled" />
+            <input
+              type="text"
+              value={grade.name}
+              className={grade.isEdit ? "input input-bordered" : "input"}
+              // onChange={(event) => handleNameChange(event, grade.courseId)}
+            />
           </th>
           <th>
             <div className="flex items-center space-x-3">

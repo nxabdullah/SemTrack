@@ -1,22 +1,23 @@
 import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
 
-// shape of a course
-type Tcourse = {
+export interface Course {
   id: string;
   name: string;
+}
+
+export type CourseState = {
+  courses: Course[];
 };
 
-// shape of the course state
-type TCourseState = {
-  courses: Tcourse[];
-};
-
-// define initial state
-const initialState: TCourseState = {
+const initialState: CourseState = {
   courses: [
     {
       id: "1",
-      name: "CSC108",
+      name: "CSC148",
+    },
+    {
+      id: "2",
+      name: "MAT102",
     },
   ],
 };
@@ -25,20 +26,14 @@ const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    addCourse(state, action: PayloadAction<Tcourse>) {
+    addCourse(state, action: PayloadAction<Course>) {
       state.courses.push({
         id: nanoid(),
         name: action.payload.name,
       });
     },
-    removeCourse(state, action: PayloadAction<string>) {
-      // state.courses = state.courses.filter(
-      //   (course) => course.id !== action.payload
-      // );
-      console.log("delete triggered");
-    },
   },
 });
 
-export const { addCourse, removeCourse } = coursesSlice.actions;
+export const { addCourse } = coursesSlice.actions;
 export const courseReducer = coursesSlice.reducer;
