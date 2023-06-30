@@ -1,19 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { updateGrade, RootState } from "../../store";
-import { Grade, GradeState } from "../../store/slices/gradesSlice";
+import { RootState } from "../../store";
 
 function Grades({ courseId }) {
-  const dispatch = useDispatch();
-
   const grades = useSelector((state: RootState) => {
-    return state.grades.data.filter(
-      (grade: Grade) => grade.courseId === courseId
-    );
+    return state.grades.data[courseId];
   });
 
-  // const handleNameChange = (event, courseId) => {
-  //   dispatch(updateGrade({ id: courseId, name: event.target.value }));
-  // };
+  console.log(grades);
 
   const renderedGrades = () => {
     return grades.map((grade) => {

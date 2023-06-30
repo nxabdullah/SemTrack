@@ -1,14 +1,13 @@
 import { useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
-
-const generateRandomMark = () => {
-  return Math.floor(Math.random() * 100);
-};
+import { RootState } from "../../store";
+import { currGrade } from "../../utils/grades";
 
 // should i accept title and button instead?
 function Courses() {
-  const courses = useSelector((state) => state.courses.courses);
+  const courses = useSelector((state: RootState) => state.courses.courses);
+  const grades = useSelector((state: RootState) => state.grades.data);
 
   const renderedCourses = courses.map((course) => {
     return (
@@ -21,7 +20,7 @@ function Courses() {
             </div>
           </div>
         </td>
-        <td>{generateRandomMark()}%</td>
+        <td>{currGrade(grades[course.id])}%</td>
         <th>
           <Link to={`/courses/${course.id}`}>
             <button className="btn btn-ghost btn-sm">view grades</button>

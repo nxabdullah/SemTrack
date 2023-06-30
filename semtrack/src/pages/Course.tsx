@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Grades from "../components/course/Grades";
 import Stats from "../components/course/Stats";
-import { RootState, addGrade } from "../store";
+import { RootState } from "../store";
 import { Course as CourseType } from "../store/slices/coursesSlice";
 
 function Course() {
-  const dispatch = useDispatch();
   const { courseId } = useParams();
 
   const course: CourseType | undefined = useSelector(
@@ -16,6 +15,10 @@ function Course() {
       );
     }
   );
+
+  const grades = useSelector((state: RootState) => {
+    return state.grades.data[courseId!];
+  });
 
   if (!course) {
     return <h1 className="text-3xl">Course not found</h1>;
@@ -27,7 +30,7 @@ function Course() {
 
       <div className="mt-8"></div>
 
-      <Stats />
+      <Stats grades={grades} />
 
       <div className="mt-4"></div>
 
