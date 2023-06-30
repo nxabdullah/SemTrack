@@ -12,7 +12,8 @@ function App() {
       <Navbar />
       <main className="container mx-auto px-6 pb-12 py-12">
         <Routes>
-          <Route path="/" element={<Landing />} />
+          {/* <Route path="/" element={<Landing />} /> */}
+          <Route path="/" element={<Dashboard />} />
           <Route path="/app" element={<Dashboard />} />
           <Route path="/courses/:courseId" element={<Course />} />
         </Routes>

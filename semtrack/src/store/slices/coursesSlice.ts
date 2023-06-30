@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
 
 // shape of a course
 type Tcourse = {
-  id?: string;
+  id: string;
   name: string;
 };
 
@@ -13,7 +13,12 @@ type TCourseState = {
 
 // define initial state
 const initialState: TCourseState = {
-  courses: [],
+  courses: [
+    {
+      id: "1",
+      name: "CSC108",
+    },
+  ],
 };
 
 const coursesSlice = createSlice({

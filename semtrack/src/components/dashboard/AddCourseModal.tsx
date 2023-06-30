@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addCourse } from "../store/";
+import { addCourse } from "../../store";
 
 // button is coupled rn @todo - use it as a prop
 // todo - add formik
