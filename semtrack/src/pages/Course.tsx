@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Grades from "../components/course/Grades";
 import Stats from "../components/course/Stats";
 import { RootState } from "../store";
 import { Course as CourseType } from "../store/slices/coursesSlice";
+import { addGrade } from "../store";
 
 function Course() {
   const { courseId } = useParams();
+  const dispatch = useDispatch();
 
   const course: CourseType | undefined = useSelector(
     (state: RootState): CourseType | undefined => {
@@ -24,6 +26,20 @@ function Course() {
     return <h1 className="text-3xl">Course not found</h1>;
   }
 
+  // future idea to prevent spamming of "add grade"
+  // have a global state, i.e grades[courseId].hasNewGrade,
+  // true until user saves that grade or remvoes it. 
+  const handleAddGrade = () => {
+    const action = addGrade({
+      courseId: course.id, 
+      name: "", 
+      grade: 0, 
+      weight: 0 
+    })
+
+    dispatch(action);
+  }
+
   return (
     <>
       <h1 className="text-3xl font-bold">{course.name}</h1>
@@ -38,7 +54,7 @@ function Course() {
         your grades
         <button
           className="btn btn-primary float-right btn-sm"
-          // onClick={() => dispatch(addGrade({ course.id! }))}
+          onClick={handleAddGrade}
         >
           add grade
         </button>

@@ -1,9 +1,12 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import GradeRow from "./GradeRow";
 
+interface GradesProps {
+  courseId: string
+}
 
-function Grades({ courseId }) {
+const Grades: React.FC<GradesProps> = ({ courseId }) => {
   const grades = useSelector((state: RootState) => {
     return state.grades.data[courseId];
   });
@@ -20,7 +23,7 @@ function Grades({ courseId }) {
             </tr>
           </thead>
           <tbody>
-            {grades.map((grade) => (<GradeRow grade={grade} />))}</tbody>
+            {grades.map((grade) => (<GradeRow grade={grade} key={grade.id} />))}</tbody>
         </table>
       </div>
     </>

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Grade } from "../../store/slices/gradesSlice"
 import classNames from 'classnames';
 import { useDispatch } from "react-redux";
-import { updateGrade, setEdit } from "../../store/";
+import { updateGrade, setEdit, removeGrade } from "../../store/";
 
 interface GradeProps {
     grade: Grade
@@ -53,8 +53,13 @@ const GradeRow: React.FC<GradeProps> = ({ grade }) => {
         dispatch(action)
     }
 
+    const handleRemove = (grade: Grade) => {
+        const action = removeGrade(grade)
+        dispatch(action)
+    }
+
     return (
-        <tr key={grade.id}>
+        <tr>
           <th>
             <input
               type="text"
@@ -108,7 +113,12 @@ const GradeRow: React.FC<GradeProps> = ({ grade }) => {
             )}
           </th>
           <th>
-            <button className="btn btn-ghost btn-xs">remove</button>
+            <button 
+                className="btn btn-ghost btn-xs"
+                onClick={() => handleRemove(grade)}
+            >
+                remove
+            </button>
           </th>
         </tr>        
     )

@@ -30,8 +30,6 @@ function Courses() {
     );
   });
 
-  console.log(courses);
-
   return (
     <>
       {/* <AddCourseModal

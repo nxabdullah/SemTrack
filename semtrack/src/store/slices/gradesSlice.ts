@@ -63,7 +63,12 @@ const gradesSlice = createSlice({
   name: "grades",
   initialState,
   reducers: {
-    addGrade(state: GradeState, action: PayloadAction<Grade>) {
+    addGrade(state: GradeState, action: PayloadAction<{
+      name: string,
+      grade: number,
+      weight: number,
+      courseId: string,
+    }>) {
       const { courseId } = action.payload;
       state.data[courseId].push({
         id: nanoid(),
@@ -71,7 +76,7 @@ const gradesSlice = createSlice({
         grade: action.payload.grade,
         weight: action.payload.weight,
         courseId: action.payload.courseId,
-        isEdit: false,
+        isEdit: true,
       });
     },
     updateGrade(state: GradeState, action: PayloadAction<Grade>) {
@@ -91,9 +96,18 @@ const gradesSlice = createSlice({
       if (gradeIndex >= 0) {
         state.data[courseId][gradeIndex].isEdit = true;
       }
+    },
+    removeGrade(state: GradeState, action: PayloadAction<Grade>) {
+      const { courseId, id } = action.payload;
+
+      const gradeIndex = state.data[courseId].findIndex((grade) => grade.id === id);
+    
+      if (gradeIndex >= 0) {
+        state.data[courseId].splice(gradeIndex, 1)
+      }
     }
   },
 });
 
-export const { addGrade, updateGrade, setEdit } = gradesSlice.actions;
+export const { addGrade, updateGrade, setEdit, removeGrade } = gradesSlice.actions;
 export const gradesReducer = gradesSlice.reducer;
