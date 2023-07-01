@@ -1,4 +1,4 @@
-import { currGrade, minGrade, maxGrade } from "../../utils/grades";
+import { calculateAverageGrade, calculateMinGrade, calculateMaxGrade } from "../../utils/grades";
 import { Grade } from "../../store/slices/gradesSlice";
 
 interface StatsProps {
@@ -12,20 +12,24 @@ const Stats: React.FC<StatsProps> = ({ grades }) => {
         <div className="stat">
           <div className="stat-figure text-primary"></div>
           <div className="stat-title text-sm font-semibold">Grade</div>
-          <div className="stat-value">{currGrade(grades)} / 100</div>
+          <div className="stat-value">{calculateAverageGrade(grades)} / 100</div>
         </div>
 
         <div className="stat">
           <div className="stat-figure text-secondary"></div>
           <div className="stat-title text-sm font-semibold">Min Grade</div>
-          <div className="stat-value">{minGrade()} / 100</div>
-          <div className="stat-desc">Learn more</div>
+          <div className="stat-value">{calculateMinGrade(grades)} / 100</div>
+          <div className="stat-desc">
+            <div className="tooltip tooltip-right" data-tip="hello">
+              Learn more
+            </div>
+          </div>
         </div>
 
         <div className="stat">
           <div className="stat-figure text-secondary"></div>
           <div className="stat-title text-sm font-semibold">Max Grade</div>
-          <div className="stat-value">{maxGrade()} / 100</div>
+          <div className="stat-value">{calculateMaxGrade(grades)} / 100</div>
           <div className="stat-desc">Learn more</div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store";
-import { currGrade } from "../../utils/grades";
+import { calculateAverageGrade } from "../../utils/grades";
 
 // should i accept title and button instead?
 function Courses() {
@@ -20,7 +20,7 @@ function Courses() {
             </div>
           </div>
         </td>
-        <td>{currGrade(grades[course.id])}%</td>
+        <td>{calculateAverageGrade(grades[course.id])}%</td>
         <th>
           <Link to={`/courses/${course.id}`}>
             <button className="btn btn-ghost btn-sm">view grades</button>
