@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
+import { addCourse } from "..";
+import { Course } from "./coursesSlice";
 
 export interface Grade {
   id: string;
@@ -105,7 +107,12 @@ const gradesSlice = createSlice({
       if (gradeIndex >= 0) {
         state.data[courseId].splice(gradeIndex, 1)
       }
-    }
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(addCourse, (state, action: PayloadAction<Course>) => {
+      state.data[action.payload.id] = []
+    })
   },
 });
 

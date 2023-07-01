@@ -16,21 +16,17 @@ const Stats: React.FC<StatsProps> = ({ grades }) => {
         </div>
 
         <div className="stat">
-          <div className="stat-figure text-secondary"></div>
+          <div className="stat-figure text-secondary"><br /></div>
           <div className="stat-title text-sm font-semibold">Min Grade</div>
           <div className="stat-value">{calculateMinGrade(grades)} / 100</div>
-          <div className="stat-desc">
-            <div className="tooltip tooltip-right" data-tip="hello">
-              Learn more
-            </div>
-          </div>
+          <div className="stat-desc"><br /></div>
         </div>
 
         <div className="stat">
           <div className="stat-figure text-secondary"></div>
           <div className="stat-title text-sm font-semibold">Max Grade</div>
           <div className="stat-value">{calculateMaxGrade(grades)} / 100</div>
-          <div className="stat-desc">Learn more</div>
+          <div className="stat-desc"></div>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCourse } from "../../store";
+import { nanoid } from "@reduxjs/toolkit";
 
 // button is coupled rn @todo - use it as a prop
-// todo - add formik
 function AddCourseModal() {
   const [inputCourseName, setInputCourseName] = useState("");
   const dispatch = useDispatch();
@@ -11,6 +11,7 @@ function AddCourseModal() {
   const handleAddCourse = () => {
     dispatch(
       addCourse({
+        id: nanoid(),
         name: inputCourseName,
       })
     );

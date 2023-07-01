@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Course {
   id: string;
@@ -27,10 +27,7 @@ const coursesSlice = createSlice({
   initialState,
   reducers: {
     addCourse(state, action: PayloadAction<Course>) {
-      state.courses.push({
-        id: nanoid(),
-        name: action.payload.name,
-      });
+      state.courses.push(action.payload);
     },
   },
 });

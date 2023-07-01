@@ -38,7 +38,7 @@ function Courses() {
         }
       /> */}
       <h1 className="text-2xl font-semibold">
-        your courses{" "}
+        Your Courses
         {/* <button className="btn btn-primary float-right">add course</button> */}
         <AddCourseModal />
       </h1>
