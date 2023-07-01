@@ -75,10 +75,25 @@ const gradesSlice = createSlice({
       });
     },
     updateGrade(state: GradeState, action: PayloadAction<Grade>) {
-      console.log(action);
+      const { courseId, id } = action.payload;
+
+      const gradeIndex = state.data[courseId].findIndex((grade) => grade.id === id);
+
+      if (gradeIndex >= 0) {
+        state.data[courseId][gradeIndex] = action.payload;
+      }
     },
+    setEdit(state: GradeState, action: PayloadAction<Grade>) {
+      const { courseId, id } = action.payload;
+
+      const gradeIndex = state.data[courseId].findIndex((grade) => grade.id === id);
+    
+      if (gradeIndex >= 0) {
+        state.data[courseId][gradeIndex].isEdit = true;
+      }
+    }
   },
 });
 
-export const { addGrade, updateGrade } = gradesSlice.actions;
+export const { addGrade, updateGrade, setEdit } = gradesSlice.actions;
 export const gradesReducer = gradesSlice.reducer;

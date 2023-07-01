@@ -1,55 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
+import GradeRow from "./GradeRow";
+
 
 function Grades({ courseId }) {
   const grades = useSelector((state: RootState) => {
     return state.grades.data[courseId];
   });
-
-  console.log(grades);
-
-  const renderedGrades = () => {
-    return grades.map((grade) => {
-      return (
-        <tr key={grade.id}>
-          <th>
-            <input
-              type="text"
-              value={grade.name}
-              className={grade.isEdit ? "input input-bordered" : "input"}
-              // onChange={(event) => handleNameChange(event, grade.courseId)}
-            />
-          </th>
-          <th>
-            <div className="flex items-center space-x-3">
-              <div>
-                <input
-                  type="number"
-                  value={grade.grade}
-                  className="input disabled w-20"
-                />
-              </div>
-            </div>
-          </th>
-          <th>
-            {" "}
-            <input
-              type="number"
-              value={grade.weight}
-              className="input disabled w-20"
-            />
-          </th>
-          <th>
-            {" "}
-            <button className="btn btn-ghost btn-xs">edit</button>
-          </th>
-          <th>
-            <button className="btn btn-ghost btn-xs">remove</button>
-          </th>
-        </tr>
-      );
-    });
-  };
 
   return (
     <>
@@ -62,7 +19,8 @@ function Grades({ courseId }) {
               <th>Weight (%)</th>
             </tr>
           </thead>
-          <tbody>{renderedGrades()}</tbody>
+          <tbody>
+            {grades.map((grade) => (<GradeRow grade={grade} />))}</tbody>
         </table>
       </div>
     </>

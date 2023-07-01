@@ -5,6 +5,7 @@ import {
   addGrade,
   updateGrade,
   GradeState,
+  setEdit
 } from "./slices/gradesSlice";
 
 export interface RootState {
@@ -19,4 +20,4 @@ const store = configureStore({
   },
 });
 
-export { store, addCourse, addGrade, updateGrade };
+export { store, addCourse, addGrade, updateGrade, setEdit };
