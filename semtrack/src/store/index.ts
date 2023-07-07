@@ -8,16 +8,19 @@ import {
   setEdit,
   removeGrade
 } from "./slices/gradesSlice";
+import { GPAState, gpaReducer } from "./slices/gpaSlice";
 
 export interface RootState {
   courses: CourseState;
   grades: GradeState;
+  gpa: GPAState;
 }
 
 const store = configureStore({
   reducer: {
     courses: courseReducer,
     grades: gradesReducer,
+    gpa: gpaReducer,
   },
 });
 

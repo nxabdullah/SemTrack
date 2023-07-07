@@ -13,8 +13,8 @@ function Dashboard() {
       TBD - show reminders to enter grades for upcoming assignments, tests, and
       exams.
       <div className="mt-4"></div> */}
-      {/* <SemesterStats /> */}
-      {/* <div className="mt-8"></div> */}
+      <SemesterStats />
+      <div className="mt-8"></div>
       <Courses />
     </>
   );
