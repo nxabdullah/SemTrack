@@ -2,45 +2,49 @@ import { Course } from "../store/slices/coursesSlice";
 import { GPAState } from "../store/slices/gpaSlice";
 import { Grade, GradeState } from "../store/slices/gradesSlice";
 import { calculateAverageGrade } from "./grades";
-// todo: refactor this entire file
+
 /**
- * Calculates the combined GPA of all the given courses
+ * Calculates the combined GPA and grade in percentage of all the given courses
  *
  * @param {Course[]} courses An array of Course objects
  *
- * @returns {number} the combined GPA of the given courses
+ * @returns {averageGPA: string, averageGradeInPercentage: string}
+ * An object containing the combined GPA and grade in percentage
  */
 export const calculateGPAFromCourses = (
   courses: Course[],
   gradeState: GradeState,
   GPAState: GPAState
 ) => {
-  let gpa = 0;
-  let weight = 0;
+  let sumOfGPA = 0;
+  let sumOfWeight = 0;
+  let sumOfGradesInPercentage = 0;
 
-  let gradePercentage = 0;
-
-  for (let course of courses) {
+  for (const course of courses) {
     const grades: Grade[] = gradeState.data[course.id];
+    const courseAverageGrade = calculateAverageGrade(grades);
+    const courseGPA = calculateGPAFromGrade(courseAverageGrade, GPAState);
 
-    let grade = calculateAverageGrade(grades);
-
-    gradePercentage += grade;
-
-    let courseGPA = calculateGPAFromGrade(grade, GPAState);
-
-    // when weight is 2, add the gpa twice.
-    gpa += courseGPA;
-    weight += 1;
+    sumOfGradesInPercentage += courseAverageGrade;
+    sumOfGPA += courseGPA * course.weight;
+    sumOfWeight += course.weight;
   }
 
-  gpa = (gpa / weight).toFixed(2);
-  gradePercentage = (gradePercentage / weight).toFixed(2);
+  const averageGPA = (sumOfGPA / sumOfWeight).toFixed(2);
+  const averageGradeInPercentage = (
+    sumOfGradesInPercentage / sumOfWeight
+  ).toFixed(2);
 
-  return { gpa, gradePercentage };
+  return { averageGPA, averageGradeInPercentage };
 };
 
-// given grade, convert to gpa
+/**
+ * Calculates the GPA of a given grade
+ *
+ * @param {number} grade The grade to calculate the GPA of
+ *
+ * @returns {number} The GPA in two decimal places of the given grade
+ */
 export const calculateGPAFromGrade = (
   grade: number,
   GPAState: GPAState
@@ -48,14 +52,11 @@ export const calculateGPAFromGrade = (
   if (!GPAState.isOn) {
     return 0;
   }
-
   const activeScale = GPAState.templates[GPAState.activeTemplate].scale;
-
-  for (let gradeRange of activeScale) {
+  for (const gradeRange of activeScale) {
     if (grade >= gradeRange.min && grade <= gradeRange.max) {
       return gradeRange.gpa;
     }
   }
-
   throw new Error(`No GPA found for grade ${grade}`);
 };

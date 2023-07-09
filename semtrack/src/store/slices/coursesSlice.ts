@@ -15,10 +15,12 @@ const initialState: CourseState = {
     {
       id: "1",
       name: "CSC148",
+      weight: 1,
     },
     {
       id: "2",
       name: "MAT102",
+      weight: 1,
     },
   ],
 };
