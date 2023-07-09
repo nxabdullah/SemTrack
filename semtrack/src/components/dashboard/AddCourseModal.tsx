@@ -1,60 +1,87 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCourse } from "../../store";
 import { nanoid } from "@reduxjs/toolkit";
+import { useFormik } from "formik";
 
-// button is coupled rn @todo - use it as a prop
 function AddCourseModal() {
-  const [inputCourseName, setInputCourseName] = useState("");
   const dispatch = useDispatch();
 
-  const handleAddCourse = () => {
-    dispatch(
-      addCourse({
-        id: nanoid(),
-        name: inputCourseName,
-      })
-    );
-    setInputCourseName("");
-    closeModal();
-  };
+  const formik = useFormik({
+    initialValues: {
+      courseName: "",
+      courseWeight: 1,
+    },
+    onSubmit: (values, { resetForm }) => {
+      if (values.courseName !== "") {
+        dispatch(
+          addCourse({
+            id: nanoid(),
+            name: values.courseName,
+            weight: values.courseWeight,
+          })
+        );
+        resetForm();
+        closeModal();
+      }
+    },
+  });
 
   const closeModal = () => {
     window.addCourseModal.close();
   };
 
-  const handleClose = (event) => {
-    event.preventDefault();
-    setInputCourseName("");
-    closeModal();
-  };
-
   return (
     <>
       <dialog id="addCourseModal" className="modal">
-        <form method="dialog" className="modal-box" onSubmit={handleAddCourse}>
+        <form
+          method="dialog"
+          className="modal-box"
+          onSubmit={formik.handleSubmit}
+        >
           <h3 className="font-bold text-lg">ADD COURSE</h3>
+
           <div className="form-control w-full max-w-xs">
             <label className="label mt-2">
-              <span className="label-text">enter course name</span>
+              <span className="label-text">Course name</span>
             </label>
             <input
               type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs input-primary"
-              value={inputCourseName}
-              onSubmit={handleAddCourse}
-              onChange={(event) => setInputCourseName(event.target.value)}
+              placeholder="CSC108H1"
+              className="input input-bordered w-full max-w-xs"
+              id="courseName"
+              name="courseName"
+              onChange={formik.handleChange}
+              value={formik.values.courseName}
             />
           </div>
+
+          <div className="form-control w-full max-w-xs">
+            <label className="label mt-2">
+              <span className="label-text">Course weight</span>
+            </label>
+            <select
+              className="select select-bordered"
+              id="courseWeight"
+              name="courseWeight"
+              onChange={formik.handleChange}
+              value={formik.values.courseWeight}
+            >
+              <option value={1}>0.5</option>
+              <option value={2}>1.0</option>
+            </select>
+          </div>
+
           <div className="modal-action">
-            <button className="btn" onClick={(e) => handleClose(e)}>
+            <button className="btn" type="button" onClick={closeModal}>
               close
             </button>
-            <button className="btn btn-primary">add</button>
+            <button className="btn btn-primary" type="submit">
+              add
+            </button>
           </div>
         </form>
       </dialog>
+
       <button
         className="btn btn-primary float-right"
         onClick={() => window.addCourseModal.showModal()}

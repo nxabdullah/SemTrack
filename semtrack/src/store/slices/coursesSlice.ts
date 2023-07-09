@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface Course {
   id: string;
   name: string;
+  weight: number;
 }
 
 export type CourseState = {
