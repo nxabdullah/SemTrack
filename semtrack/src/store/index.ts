@@ -1,12 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { courseReducer, addCourse, CourseState } from "./slices/coursesSlice";
+import {
+  courseReducer,
+  addCourse,
+  editCourse,
+  setSelectedCourse,
+  CourseState,
+} from "./slices/coursesSlice";
 import {
   gradesReducer,
   addGrade,
   updateGrade,
   GradeState,
   setEdit,
-  removeGrade
+  removeGrade,
 } from "./slices/gradesSlice";
 import { GPAState, gpaReducer } from "./slices/gpaSlice";
 
@@ -24,4 +30,13 @@ const store = configureStore({
   },
 });
 
-export { store, addCourse, addGrade, updateGrade, setEdit, removeGrade };
+export {
+  store,
+  addCourse,
+  editCourse,
+  setSelectedCourse,
+  addGrade,
+  updateGrade,
+  setEdit,
+  removeGrade,
+};

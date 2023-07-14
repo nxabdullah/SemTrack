@@ -28,17 +28,17 @@ function Course() {
 
   // future idea to prevent spamming of "add grade"
   // have a global state, i.e grades[courseId].hasNewGrade,
-  // true until user saves that grade or remvoes it. 
+  // true until user saves that grade or remvoes it.
   const handleAddGrade = () => {
     const action = addGrade({
-      courseId: course.id, 
-      name: "", 
-      grade: 0, 
-      weight: 0 
-    })
+      courseId: course.id,
+      name: "",
+      grade: 0,
+      weight: 0,
+    });
 
     dispatch(action);
-  }
+  };
 
   return (
     <>

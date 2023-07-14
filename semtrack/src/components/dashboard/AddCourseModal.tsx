@@ -1,32 +1,59 @@
-import { useDispatch } from "react-redux";
-import { addCourse } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  RootState,
+  addCourse,
+  editCourse,
+  setSelectedCourse,
+} from "../../store";
 import { nanoid } from "@reduxjs/toolkit";
 import { useFormik } from "formik";
+import { Course } from "../../store/slices/coursesSlice";
 
-function AddCourseModal() {
+const AddCourseModal: React.FC = () => {
   const dispatch = useDispatch();
+  const course = useSelector(
+    (state: RootState) => state.courses.selectedCourse
+  );
 
-  const formik = useFormik({
+  interface formValues {
+    courseName: string;
+    courseWeight: number;
+  }
+
+  const formik = useFormik<formValues>({
     initialValues: {
-      courseName: "",
-      courseWeight: 1,
+      courseName: course ? course.name : "",
+      courseWeight: course ? course.weight : 1,
     },
     onSubmit: (values, { resetForm }) => {
-      if (values.courseName !== "") {
-        dispatch(
-          addCourse({
-            id: nanoid(),
-            name: values.courseName,
-            weight: values.courseWeight,
-          })
-        );
-        resetForm();
-        closeModal();
+      if (course === undefined) {
+        // add course
+        if (values.courseName !== "") {
+          dispatch(
+            addCourse({
+              id: nanoid(),
+              name: values.courseName,
+              weight: Number(values.courseWeight),
+            })
+          );
+          resetForm();
+          closeModal();
+        }
+      } else {
+        // edit course
+        const editedCourse: Course = {
+          ...course,
+          name: values.courseName,
+          weight: Number(values.courseWeight),
+        };
+        dispatch(editCourse(editedCourse));
       }
     },
+    enableReinitialize: true,
   });
 
   const closeModal = () => {
+    dispatch(setSelectedCourse(undefined));
     window.addCourseModal.close();
   };
 
@@ -38,7 +65,9 @@ function AddCourseModal() {
           className="modal-box"
           onSubmit={formik.handleSubmit}
         >
-          <h3 className="font-bold text-lg">ADD COURSE</h3>
+          <h3 className="font-bold text-lg">
+            {course ? "MANAGE" : "ADD"} COURSE
+          </h3>
 
           <div className="form-control w-full max-w-xs">
             <label className="label mt-2">
@@ -76,20 +105,13 @@ function AddCourseModal() {
               close
             </button>
             <button className="btn btn-primary" type="submit">
-              add
+              {course ? "SAVE" : "ADD"}
             </button>
           </div>
         </form>
       </dialog>
-
-      <button
-        className="btn btn-primary float-right"
-        onClick={() => window.addCourseModal.showModal()}
-      >
-        add course
-      </button>
     </>
   );
-}
+};
 
 export default AddCourseModal;
