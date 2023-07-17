@@ -16,7 +16,7 @@ const AddCourseModal: React.FC = () => {
       courseName: "",
       courseWeight: 1,
     },
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values: formValues) => {
       if (values.courseName !== "") {
         dispatch(
           addCourse({
@@ -25,7 +25,6 @@ const AddCourseModal: React.FC = () => {
             weight: Number(values.courseWeight),
           })
         );
-        resetForm();
         closeModal();
       }
     },
