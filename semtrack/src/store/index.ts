@@ -15,10 +15,11 @@ import {
   setEdit,
   removeGrade,
 } from "./slices/gradesSlice";
-import { appReducer, setToast, resetToast } from "./slices/appSlice";
+import { appReducer, setToast, resetToast, AppState } from "./slices/appSlice";
 import { GPAState, gpaReducer } from "./slices/gpaSlice";
 
 export interface RootState {
+  app: AppState;
   courses: CourseState;
   grades: GradeState;
   gpa: GPAState;

@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
-import { RootState, setSelectedCourse, deleteCourse } from "../../store";
+import { RootState } from "../../store";
 import { calculateAverageGrade } from "../../utils/grades";
 import EmptyRow from "../shared/EmptyRow";
 

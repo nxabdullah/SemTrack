@@ -96,7 +96,7 @@ function Course() {
         </button>
       </h1>
       <div className="mt-2"></div>
-      <Grades courseId={courseId} />
+      <Grades courseId={courseId!} />
     </>
   );
 }
