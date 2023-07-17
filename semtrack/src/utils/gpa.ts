@@ -25,7 +25,11 @@ export const calculateGPAFromCourses = (
     const courseAverageGrade = calculateAverageGrade(grades);
     const courseGPA = calculateGPAFromGrade(courseAverageGrade, GPAState);
 
-    sumOfGradesInPercentage += courseAverageGrade;
+    if (courseAverageGrade === 0) {
+      continue;
+    }
+
+    sumOfGradesInPercentage += courseAverageGrade * course.weight;
     sumOfGPA += courseGPA * course.weight;
     sumOfWeight += course.weight;
   }

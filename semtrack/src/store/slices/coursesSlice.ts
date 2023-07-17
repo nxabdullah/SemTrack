@@ -8,6 +8,7 @@ export interface Course {
 
 export type CourseState = {
   courses: Course[];
+  selectedCourse: Course | undefined; // for managing
 };
 
 const initialState: CourseState = {
@@ -23,6 +24,7 @@ const initialState: CourseState = {
       weight: 1,
     },
   ],
+  selectedCourse: undefined,
 };
 
 const coursesSlice = createSlice({
@@ -32,8 +34,27 @@ const coursesSlice = createSlice({
     addCourse(state, action: PayloadAction<Course>) {
       state.courses.push(action.payload);
     },
+    setSelectedCourse(state, action: PayloadAction<Course | undefined>) {
+      state.selectedCourse = action.payload;
+    },
+    editCourse(state, action: PayloadAction<Course>) {
+      const { id, name, weight } = action.payload;
+      const course = state.courses.find((course) => course.id === id);
+      if (course) {
+        course.name = name;
+        course.weight = weight;
+      }
+    },
+    deleteCourse(state, action: PayloadAction<Course>) {
+      const { id } = action.payload;
+      const courseIndex = state.courses.findIndex((course) => course.id === id);
+      if (courseIndex !== -1) {
+        state.courses.splice(courseIndex, 1);
+      }
+    },
   },
 });
 
-export const { addCourse } = coursesSlice.actions;
+export const { addCourse, editCourse, deleteCourse, setSelectedCourse } =
+  coursesSlice.actions;
 export const courseReducer = coursesSlice.reducer;

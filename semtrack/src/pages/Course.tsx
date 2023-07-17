@@ -2,13 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Grades from "../components/course/Grades";
 import Stats from "../components/course/Stats";
-import { RootState } from "../store";
+import { RootState, resetToast } from "../store";
 import { Course as CourseType } from "../store/slices/coursesSlice";
-import { addGrade } from "../store";
+import { addGrade, setSelectedCourse, deleteCourse, setToast } from "../store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import EditCourseModal from "../components/course/EditCourseModal";
 
 function Course() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const course: CourseType | undefined = useSelector(
     (state: RootState): CourseType | undefined => {
@@ -26,23 +31,54 @@ function Course() {
     return <h1 className="text-3xl">Course not found</h1>;
   }
 
-  // future idea to prevent spamming of "add grade"
-  // have a global state, i.e grades[courseId].hasNewGrade,
-  // true until user saves that grade or remvoes it. 
+  // todo: prevent user from adding grades if they already clicked it
   const handleAddGrade = () => {
     const action = addGrade({
-      courseId: course.id, 
-      name: "", 
-      grade: 0, 
-      weight: 0 
-    })
-
+      courseId: course.id,
+      name: "",
+      grade: 0,
+      weight: 0,
+    });
     dispatch(action);
-  }
+  };
+
+  const handleManageCourse = () => {
+    dispatch(setSelectedCourse(course));
+    window.editCourseModal.showModal();
+  };
+
+  const handleDeleteCourse = () => {
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      dispatch(
+        setToast({
+          show: true,
+          message: course.name + " was successfully deleted.",
+          type: "success",
+        })
+      );
+      dispatch(deleteCourse(course));
+      navigate("/");
+      setTimeout(() => {
+        dispatch(resetToast());
+      }, 4000);
+    }
+  };
 
   return (
     <>
-      <h1 className="text-3xl font-bold">{course.name}</h1>
+      <EditCourseModal course={course} />
+      <h1 className="text-3xl font-bold">
+        {course.name}
+        <button
+          className="btn btn-sm float-right ms-2"
+          onClick={handleDeleteCourse}
+        >
+          <FontAwesomeIcon icon={faTrash} />{" "}
+        </button>
+        <button className="btn btn-sm float-right" onClick={handleManageCourse}>
+          <FontAwesomeIcon icon={faCog} />{" "}
+        </button>
+      </h1>
 
       <div className="mt-8"></div>
 
