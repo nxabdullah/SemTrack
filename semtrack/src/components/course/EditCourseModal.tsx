@@ -1,9 +1,14 @@
 import { useDispatch } from "react-redux";
-import { addCourse, setSelectedCourse } from "../../store";
-import { nanoid } from "@reduxjs/toolkit";
+import { editCourse } from "../../store";
 import { useFormik } from "formik";
+import { Course } from "../../store/slices/coursesSlice";
 
-const AddCourseModal: React.FC = () => {
+interface AddCourseModalProps {
+  course: Course;
+}
+
+// todo: DRY
+const EditCourseModal: React.FC<AddCourseModalProps> = ({ course }) => {
   const dispatch = useDispatch();
 
   interface formValues {
@@ -13,39 +18,35 @@ const AddCourseModal: React.FC = () => {
 
   const formik = useFormik<formValues>({
     initialValues: {
-      courseName: "",
-      courseWeight: 1,
+      courseName: course.name,
+      courseWeight: course.weight,
     },
-    onSubmit: (values, { resetForm }) => {
-      if (values.courseName !== "") {
-        dispatch(
-          addCourse({
-            id: nanoid(),
-            name: values.courseName,
-            weight: Number(values.courseWeight),
-          })
-        );
-        resetForm();
-        closeModal();
-      }
+    onSubmit: (values) => {
+      dispatch(
+        editCourse({
+          ...course,
+          name: values.courseName,
+          weight: Number(values.courseWeight),
+        })
+      );
+      closeModal();
     },
     enableReinitialize: true,
   });
 
   const closeModal = () => {
-    window.addCourseModal.close();
-    dispatch(setSelectedCourse(undefined));
+    window.editCourseModal.close();
   };
 
   return (
     <>
-      <dialog id="addCourseModal" className="modal">
+      <dialog id="editCourseModal" className="modal">
         <form
           method="dialog"
           className="modal-box"
           onSubmit={formik.handleSubmit}
         >
-          <h3 className="font-bold text-lg">ADD</h3>
+          <h3 className="font-bold text-lg">EDIT COURSE</h3>
 
           <div className="form-control w-full max-w-xs">
             <label className="label mt-2">
@@ -83,7 +84,7 @@ const AddCourseModal: React.FC = () => {
               close
             </button>
             <button className="btn btn-primary" type="submit">
-              ADD
+              SAVE
             </button>
           </div>
         </form>
@@ -92,4 +93,4 @@ const AddCourseModal: React.FC = () => {
   );
 };
 
-export default AddCourseModal;
+export default EditCourseModal;

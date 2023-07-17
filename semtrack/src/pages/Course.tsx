@@ -7,8 +7,8 @@ import { Course as CourseType } from "../store/slices/coursesSlice";
 import { addGrade, setSelectedCourse, deleteCourse, setToast } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
-import AddCourseModal from "../components/dashboard/AddCourseModal";
 import { useNavigate } from "react-router-dom";
+import EditCourseModal from "../components/course/EditCourseModal";
 
 function Course() {
   const { courseId } = useParams();
@@ -44,7 +44,7 @@ function Course() {
 
   const handleManageCourse = () => {
     dispatch(setSelectedCourse(course));
-    window.addCourseModal.showModal();
+    window.editCourseModal.showModal();
   };
 
   const handleDeleteCourse = () => {
@@ -66,7 +66,7 @@ function Course() {
 
   return (
     <>
-      <AddCourseModal />
+      <EditCourseModal course={course} />
       <h1 className="text-3xl font-bold">
         {course.name}
         <button
