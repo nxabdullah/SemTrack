@@ -39,6 +39,13 @@ export const calculateGPAFromCourses = (
     sumOfGradesInPercentage / sumOfWeight
   ).toFixed(2);
 
+  // addresses two edge cases:
+  //  1. if the user has no courses
+  //  2. if the user has courses but no grades
+  if (averageGradeInPercentage === NaN.toString()) {
+    return { averageGPA: "0.00", averageGradeInPercentage: "0.00" };
+  }
+
   return { averageGPA, averageGradeInPercentage };
 };
 

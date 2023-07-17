@@ -3,33 +3,42 @@ import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
 import { RootState, setSelectedCourse, deleteCourse } from "../../store";
 import { calculateAverageGrade } from "../../utils/grades";
+import EmptyRow from "../shared/EmptyRow";
 
 function Courses() {
   const courses = useSelector((state: RootState) => state.courses.courses);
   const grades = useSelector((state: RootState) => state.grades.data);
 
-  const renderedCourses = courses.map((course) => {
-    return (
-      <tr key={course.id}>
-        <td>
-          <div className="flex items-center space-x-3">
-            <div>
-              <div className="font-bold text-lg">
-                <Link to={`/courses/${course.id}`}>{course.name}</Link>
+  const renderedCourses = () => {
+    if (courses.length === 0) {
+      return (
+        <EmptyRow message="No courses found. Add a course and get started! 😁" />
+      );
+    }
+
+    return courses.map((course) => {
+      return (
+        <tr key={course.id}>
+          <td>
+            <div className="flex items-center space-x-3">
+              <div>
+                <div className="font-bold text-lg">
+                  <Link to={`/courses/${course.id}`}>{course.name}</Link>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td>{calculateAverageGrade(grades[course.id])}%</td>
-        <td>{course.weight / 2}</td>
-        <th>
-          <Link to={`/courses/${course.id}`}>
-            <button className="btn btn-ghost btn-sm">view </button>
-          </Link>
-        </th>
-      </tr>
-    );
-  });
+          </td>
+          <td>{calculateAverageGrade(grades[course.id])}%</td>
+          <td>{course.weight / 2}</td>
+          <th>
+            <Link to={`/courses/${course.id}`}>
+              <button className="btn btn-ghost btn-sm">view </button>
+            </Link>
+          </th>
+        </tr>
+      );
+    });
+  };
 
   return (
     <>
@@ -55,7 +64,7 @@ function Courses() {
               <th></th>
             </tr>
           </thead>
-          <tbody>{renderedCourses}</tbody>
+          <tbody>{renderedCourses()}</tbody>
         </table>
       </div>
     </>
