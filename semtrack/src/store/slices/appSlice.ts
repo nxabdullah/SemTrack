@@ -8,7 +8,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface Toast {
   show: boolean;
   message: string;
-  type: "success" | "error" | "warning" | "info";
+  type:
+    | "success"
+    | "error"
+    | "warning"
+    | "info"
+    | "primary"
+    | "secondary"
+    | "accent"
+    | undefined;
 }
 
 export interface AppState {
