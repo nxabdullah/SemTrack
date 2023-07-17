@@ -60,6 +60,7 @@ const EditCourseModal: React.FC<AddCourseModalProps> = ({ course }) => {
               name="courseName"
               onChange={formik.handleChange}
               value={formik.values.courseName}
+              autoComplete="false"
             />
           </div>
 

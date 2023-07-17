@@ -60,7 +60,7 @@ function Course() {
       navigate("/");
       setTimeout(() => {
         dispatch(resetToast());
-      }, 4000);
+      }, 3000);
     }
   };
 
