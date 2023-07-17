@@ -45,9 +45,16 @@ const coursesSlice = createSlice({
         course.weight = weight;
       }
     },
+    deleteCourse(state, action: PayloadAction<Course>) {
+      const { id } = action.payload;
+      const courseIndex = state.courses.findIndex((course) => course.id === id);
+      if (courseIndex !== -1) {
+        state.courses.splice(courseIndex, 1);
+      }
+    },
   },
 });
 
-export const { addCourse, editCourse, setSelectedCourse } =
+export const { addCourse, editCourse, deleteCourse, setSelectedCourse } =
   coursesSlice.actions;
 export const courseReducer = coursesSlice.reducer;

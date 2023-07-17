@@ -47,14 +47,15 @@ const AddCourseModal: React.FC = () => {
           weight: Number(values.courseWeight),
         };
         dispatch(editCourse(editedCourse));
+        closeModal();
       }
     },
     enableReinitialize: true,
   });
 
   const closeModal = () => {
-    dispatch(setSelectedCourse(undefined));
     window.addCourseModal.close();
+    dispatch(setSelectedCourse(undefined));
   };
 
   return (
@@ -66,7 +67,7 @@ const AddCourseModal: React.FC = () => {
           onSubmit={formik.handleSubmit}
         >
           <h3 className="font-bold text-lg">
-            {course ? "MANAGE" : "ADD"} COURSE
+            {course ? "EDIT" : "ADD"} COURSE
           </h3>
 
           <div className="form-control w-full max-w-xs">

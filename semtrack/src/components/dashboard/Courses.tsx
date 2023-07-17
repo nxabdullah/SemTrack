@@ -1,26 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import AddCourseModal from "./AddCourseModal";
 import { Link } from "react-router-dom";
-import { RootState, setSelectedCourse } from "../../store";
+import { RootState, setSelectedCourse, deleteCourse } from "../../store";
 import { calculateAverageGrade } from "../../utils/grades";
-import { Course } from "../../store/slices/coursesSlice";
 
 function Courses() {
   const courses = useSelector((state: RootState) => state.courses.courses);
   const grades = useSelector((state: RootState) => state.grades.data);
-  const dispatch = useDispatch();
-
-  const handleManageCourse = (course: Course) => () => {
-    dispatch(setSelectedCourse(course));
-    window.addCourseModal.showModal();
-  };
 
   const renderedCourses = courses.map((course) => {
     return (
       <tr key={course.id}>
         <td>
           <div className="flex items-center space-x-3">
-            {" "}
             <div>
               <div className="font-bold text-lg">
                 <Link to={`/courses/${course.id}`}>{course.name}</Link>
@@ -29,18 +21,11 @@ function Courses() {
           </div>
         </td>
         <td>{calculateAverageGrade(grades[course.id])}%</td>
+        <td>{course.weight / 2}</td>
         <th>
           <Link to={`/courses/${course.id}`}>
             <button className="btn btn-ghost btn-sm">view </button>
           </Link>
-        </th>
-        <th>
-          <button
-            className="btn btn-ghost btn-sm"
-            onClick={handleManageCourse(course)}
-          >
-            edit
-          </button>
         </th>
       </tr>
     );
@@ -66,6 +51,7 @@ function Courses() {
             <tr>
               <th>name</th>
               <th>cumulative grade</th>
+              <th>weight</th>
               <th></th>
             </tr>
           </thead>

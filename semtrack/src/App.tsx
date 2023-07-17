@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Landing from "./pages/Landing";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Course from "./pages/Course";
+import Toasts from "./components/layout/Toasts";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         </Routes>
       </main>
       {/* </div> */}
+      <Toasts />
     </Router>
   );
 }
