@@ -15,11 +15,16 @@ import {
   setEdit,
   removeGrade,
 } from "./slices/gradesSlice";
-import { appReducer, setToast, resetToast, AppState } from "./slices/appSlice";
+import {
+  toastsReducer,
+  ToastsState,
+  addToast,
+  deleteToast,
+} from "./slices/toastsSlice";
 import { GPAState, gpaReducer } from "./slices/gpaSlice";
 
 export interface RootState {
-  app: AppState;
+  toasts: ToastsState;
   courses: CourseState;
   grades: GradeState;
   gpa: GPAState;
@@ -27,7 +32,7 @@ export interface RootState {
 
 const store = configureStore({
   reducer: {
-    app: appReducer,
+    toasts: toastsReducer,
     courses: courseReducer,
     grades: gradesReducer,
     gpa: gpaReducer,
@@ -44,6 +49,6 @@ export {
   updateGrade,
   setEdit,
   removeGrade,
-  setToast,
-  resetToast,
+  addToast,
+  deleteToast,
 };

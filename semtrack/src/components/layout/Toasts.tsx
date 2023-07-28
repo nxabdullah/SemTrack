@@ -3,27 +3,23 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 function Toasts() {
-  const toast = useSelector((state: RootState) => state.app.toast);
+  const toasts = useSelector((state: RootState) => state.toasts.toasts);
 
   return (
-    <div
-      className={classNames("toast toast-bottom toast-start", {
-        hidden: !toast.show,
-      })}
-    >
-      <div
-        className={classNames(
-          "alert",
-          { "alert-success": toast.type === "success" },
-          { "alert-error": toast.type === "error" },
-          { "alert-warning": toast.type === "warning" },
-          { "alert-primary": toast.type === "primary" },
-          { "alert-secondary": toast.type === "secondary" },
-          { "alert-accent": toast.type === "accent" }
-        )}
-      >
-        <span>{toast.message}</span>
-      </div>
+    <div className="toast toast-bottom toast-start">
+      {toasts.map((toast) => (
+        <div
+          className={classNames(
+            "alert",
+            { "alert-success": toast.type === "success" },
+            { "alert-error": toast.type === "error" },
+            { "alert-warning": toast.type === "warning" },
+            { "alert-info": toast.type === "info" }
+          )}
+        >
+          <span>{toast.message}</span>
+        </div>
+      ))}
     </div>
   );
 }

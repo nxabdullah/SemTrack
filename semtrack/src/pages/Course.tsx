@@ -2,18 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Grades from "../components/course/Grades";
 import Stats from "../components/course/Stats";
-import { RootState, resetToast } from "../store";
+import { RootState } from "../store";
 import { Course as CourseType } from "../store/slices/coursesSlice";
-import { addGrade, setSelectedCourse, deleteCourse, setToast } from "../store";
+import { addGrade, setSelectedCourse, deleteCourse } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import EditCourseModal from "../components/course/EditCourseModal";
+import useToasts from "../hooks/useToasts";
 
 function Course() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const setToast = useToasts();
 
   const course: CourseType | undefined = useSelector(
     (state: RootState): CourseType | undefined => {
@@ -49,18 +51,9 @@ function Course() {
 
   const handleDeleteCourse = () => {
     if (window.confirm("Are you sure you want to delete this course?")) {
-      dispatch(
-        setToast({
-          show: true,
-          message: course.name + " was successfully deleted.",
-          type: "success",
-        })
-      );
       dispatch(deleteCourse(course));
       navigate("/");
-      setTimeout(() => {
-        dispatch(resetToast());
-      }, 3000);
+      setToast(course.name + " was successfully deleted.", "success");
     }
   };
 
