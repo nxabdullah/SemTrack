@@ -21,44 +21,7 @@ export type GradeState = {
 };
 
 const initialState: GradeState = {
-  data: {
-    "1": [
-      {
-        id: nanoid(),
-        name: "Assignment 1",
-        grade: 96,
-        weight: 20,
-        courseId: "1",
-        isEdit: false,
-      },
-      {
-        id: nanoid(),
-        name: "Midterm",
-        grade: 84,
-        weight: 25,
-        courseId: "1",
-        isEdit: false,
-      },
-    ],
-    "2": [
-      {
-        id: nanoid(),
-        name: "Quiz 1",
-        grade: 70,
-        weight: 9,
-        courseId: "2",
-        isEdit: false,
-      },
-      {
-        id: nanoid(),
-        name: "Problem Set 1",
-        grade: 90,
-        weight: 5,
-        courseId: "2",
-        isEdit: false,
-      },
-    ],
-  },
+  data: {},
 };
 
 const gradesSlice = createSlice({

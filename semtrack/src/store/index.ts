@@ -1,4 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import thunk from 'redux-thunk';
 import {
   courseReducer,
   addCourse,
@@ -30,14 +33,27 @@ export interface RootState {
   gpa: GPAState;
 }
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ["toasts", "gpa"] // we shouldnt have to use magic strings. 
+}
+
+const rootReducer = combineReducers({
+  toasts: toastsReducer,
+  courses: courseReducer,
+  grades: gradesReducer,
+  gpa: gpaReducer,
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const store = configureStore({
-  reducer: {
-    toasts: toastsReducer,
-    courses: courseReducer,
-    grades: gradesReducer,
-    gpa: gpaReducer,
-  },
+  reducer: persistedReducer,
+  middleware: [thunk]
 });
+
+export const persistor = persistStore(store)
 
 export {
   store,
