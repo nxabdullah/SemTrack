@@ -8,7 +8,7 @@ export interface Grade {
   grade: number;
   weight: number;
   courseId: string;
-  isEdit: boolean;
+  isEdit: boolean; // No longer being used but do not remove without asking @nxabdullah
 }
 
 // index grades by course id

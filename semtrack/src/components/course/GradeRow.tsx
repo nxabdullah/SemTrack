@@ -1,56 +1,41 @@
-import { useState } from "react"
 import { Grade } from "../../store/slices/gradesSlice"
 import classNames from 'classnames';
 import { useDispatch } from "react-redux";
-import { updateGrade, setEdit, removeGrade } from "../../store/";
+import { updateGrade, removeGrade } from "../../store/";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface GradeProps {
     grade: Grade
 }
 
 /*
- * local state is being used so that I can dispatch all the changes
- * to global state when user presses save
- * 
- * Is this a redundant to duplicate this state? I could dispatch directly
- * if we were updating the state onChange, but we want to do it when
- * the save button is pressed.  
- * 
+ * This component renders an individual table row for the grades table 
+ * in a particular course. Additionally, handles user interaction with
+ * the row.
  * */
 const GradeRow: React.FC<GradeProps> = ({ grade }) => {
-    const [localName, setLocalName] = useState(grade.name)
-    const [localGrade, setLocalGrade] = useState(grade.grade)
-    const [localWeight, setLocalWeight] = useState(grade.weight)
-
     const dispatch = useDispatch();
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalName(e.target.value)
+        dispatch(updateGrade({
+          ...grade,
+          'name': e.target.value
+        }))
     }
 
     const handleGradeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalGrade(parseInt(e.target.value))
+        dispatch(updateGrade({
+          ...grade,
+          'grade': parseInt(e.target.value)
+        }))
     }
 
     const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalWeight(parseInt(e.target.value))
-    }
-
-    const handleSave = (grade: Grade) => {
-        const action = updateGrade({
-            ...grade, 
-            "name": localName,
-            "grade": localGrade,
-            "weight": localWeight,
-            "isEdit": false,
-
-        })
-        dispatch(action)
-    }
-
-    const handleEdit = (grade: Grade) => {
-        const action = setEdit(grade)
-        dispatch(action)
+      dispatch(updateGrade({
+        ...grade,
+        'weight': parseInt(e.target.value)
+      }))   
     }
 
     const handleRemove = (grade: Grade) => {
@@ -63,12 +48,13 @@ const GradeRow: React.FC<GradeProps> = ({ grade }) => {
           <th>
             <input
               type="text"
-              value={localName}
-              className={classNames("input", {
+              value={grade.name}
+              className={classNames("input", "border-2", {
                 "input-bordered": grade.isEdit
               })}
               onChange={(e) => handleNameChange(e)}
               disabled={!grade.isEdit}
+              placeholder="Assignment"
             />
           </th>
           <th>
@@ -76,8 +62,8 @@ const GradeRow: React.FC<GradeProps> = ({ grade }) => {
               <div>
                 <input
                   type="number"
-                  value={localGrade}
-                  className={classNames("input", "w-20", {"input-bordered": grade.isEdit})} 
+                  value={grade.grade}
+                  className={classNames("input",  "border-2", "w-20", {"input-bordered": grade.isEdit})} 
                   onChange={(e) => handleGradeChange(e)}
                   disabled={!grade.isEdit}
                 />
@@ -88,36 +74,18 @@ const GradeRow: React.FC<GradeProps> = ({ grade }) => {
             {" "}
             <input
               type="number"
-              value={localWeight}
-              className={classNames("input", "w-20", {"input-bordered": grade.isEdit})} 
+              value={grade.weight}
+              className={classNames("input", "border-2", "w-20", {"input-bordered": grade.isEdit})} 
               onChange={(e) => handleWeightChange(e)}
               disabled={!grade.isEdit}
             />
-          </th>
-          <th>
-            {" "}
-            {grade.isEdit ? (
-                <button 
-                    className="btn btn-ghost btn-xs"
-                    onClick={() => handleSave(grade)}
-                >
-                    save
-                </button>
-            ) : (
-                <button 
-                    className="btn btn-ghost btn-xs"
-                    onClick={() => handleEdit(grade)}
-                >
-                    edit
-                </button>
-            )}
           </th>
           <th>
             <button 
                 className="btn btn-ghost btn-xs"
                 onClick={() => handleRemove(grade)}
             >
-                remove
+                <FontAwesomeIcon icon={faTrash} />
             </button>
           </th>
         </tr>        
