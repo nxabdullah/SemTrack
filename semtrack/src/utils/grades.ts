@@ -17,8 +17,11 @@ export const calculateTotalWeightAndGrade = (grades: Grade[]): {totalWeight: num
   let totalGrade = 0;
 
   for (let grade of grades) {
-    totalWeight += grade.weight;
-    totalGrade += grade.grade * (grade.weight / 100);
+
+    if (!!grade.grade || !!grade.weight) { // ensure grade values are truthy
+      totalWeight += grade.weight;
+      totalGrade += grade.grade * (grade.weight / 100);
+    }
   }
 
   return { totalWeight, totalGrade }
