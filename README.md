@@ -19,7 +19,7 @@ With SemTrack, the primary aim was to build a solution rooted in simplicity and 
 
 Driven by the pride and success of the original SemTrack project, a complete overhaul is now taking shape in this repository. Embracing industry standard technologies such as TypeScript and React, the new iteration aims to preserve the simplicity that made the original so popular while also improving scalability. Reflecting on the past development approach, which relied heavily on traditional web development methods like jQuery, this rejuvenation focuses on implementing best practices of today's software development landscape to deliver a superior and more efficient user experience.
 
-You can check out the old codebase [here](https://github.com/nxabdullah/gpa-calculator), but it's not a pleasant sight! 
+You can check out the old codebase [here](https://github.com/nxabdullah/gpa-calculator)
 
 ## Getting Started
 
@@ -47,7 +47,3 @@ To get a local copy up and running follow these simple example steps.
    ```
    npm run dev
    ```
-
-## Contact
-
-Abdullah Shahid - [@nxabdullah1](https://twitter.com/nxabdullah1) - nxabdullah1@gmail.com
